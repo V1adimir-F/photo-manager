@@ -22,7 +22,7 @@ import java.util.List;
 @Component
 public class FileSearcherImpl implements FileSearcher {
 
-    private static final String FILE_EXTENSION = ".jpg";
+    private static final String PHOTO_FILE_EXTENSION = ".jpg";
 
     /**
      * The `searchFiles` method is a recursive method that takes a `File` object called `rootFile` as a parameter. It
@@ -41,7 +41,7 @@ public class FileSearcherImpl implements FileSearcher {
                     if (file.isDirectory()) {
                         resultList.addAll(searchFilesRecursive(file));
                     } else {
-                        if (file.getName().toLowerCase().endsWith(FILE_EXTENSION)) {
+                        if (file.getName().toLowerCase().endsWith(PHOTO_FILE_EXTENSION)) {
                             resultList.add(file);
                         }
                     }
@@ -62,11 +62,10 @@ public class FileSearcherImpl implements FileSearcher {
     @Override
     public List<Path> searchFilesByWalkFileTree(Path rootPath) throws IOException {
         final List<Path> fileList = new ArrayList<>();
-
         Files.walkFileTree(rootPath, new SimpleFileVisitor<>() {
             @Override
             public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-                if (attrs.isRegularFile()) {
+                if (attrs.isRegularFile() && file.getFileName().toString().toLowerCase().endsWith(PHOTO_FILE_EXTENSION)) {
                     fileList.add(file);
                 }
                 return super.visitFile(file, attrs);
