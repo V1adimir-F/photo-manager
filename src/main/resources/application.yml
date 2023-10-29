@@ -1,0 +1,12 @@
+server:
+  port: 8181
+
+geocoding:
+  yandex_api_base_url: https://geocode-maps.yandex.ru/1.x
+  apikey: ${api-key}
+  results: 1
+  format: json
+  kind: street
+  lang: ru_RU
+
+
